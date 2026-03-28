@@ -1,14 +1,12 @@
-import shirt1 from "../assets/Shirts/Blue.jpeg";
-import shirt2 from "../assets/Shirts/Gray.jpeg";
-import tsh1 from "../assets/Shirts/blue.jpeg"
+import blac from "../assets/t-shirt/Black.jpeg"
 
 const tshirts = [
   {
   id:7,
-  name:"Casual Blue Shirt",
+  name:"black t-Shirt",
   price:29,
-  image:tsh1,
-  category:"shirts",
+  image:blac,
+  category:"tshirts",
   sizes:["S","M","L","XL"]
   }
 ];

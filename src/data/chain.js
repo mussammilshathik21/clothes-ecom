@@ -4,7 +4,7 @@ const chain = [
 
 {
 id:5,
-name:"Chain",
+name:"long chain",
 price:229,
 image:chain1,
 category:"chain",

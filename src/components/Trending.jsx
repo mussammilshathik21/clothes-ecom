@@ -1,6 +1,6 @@
 import trending from "../data/trending";
 import ProductCard from "./ProductCard";
-import "./Trending.css";
+import "./trending.css";
 
 function Trending() {
 

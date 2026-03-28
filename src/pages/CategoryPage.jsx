@@ -6,9 +6,9 @@ import tshirts from "../data/tshirts";
 import shoes from "../data/shoes";
 import watch from "../data/watch";
 import track from "../data/track";
-import slippers from "../data/slippers"
-import chain from "../data/chain"
-import ring from "../data/ring"
+import slippers from "../data/slippers";
+import chain from "../data/chain";
+import ring from "../data/ring";
 
 import ProductCard from "../components/ProductCard";
 
