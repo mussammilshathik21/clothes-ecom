@@ -1,16 +1,14 @@
-import chain1 from "../assets/accessories/longchain.jpeg"
+import chain1 from "../assets/accessories/Longchain.jpeg";
 
 const chain = [
-
-{
-id:5,
-name:"long chain",
-price:229,
-image:chain1,
-category:"chain",
-size:null
-}
-
+  {
+    id: 5,
+    name: "Long Chain",
+    price: 229,
+    image: chain1,
+    category: "chain",
+    size: null
+  }
 ];
 
 export default chain;

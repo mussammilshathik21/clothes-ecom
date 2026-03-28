@@ -1,5 +1,5 @@
-import shoe1 from "../assets/Shoes/Green.jpeg";
-import shoe2 from "../assets/Shoes/whiteblack.jpeg";
+import shoe1 from "../assets/shoes/Green.jpeg";
+import shoe2 from "../assets/shoes/whiteblack.jpeg";
 
 const shoes = [
 
