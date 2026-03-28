@@ -7,7 +7,7 @@ const tshirts = [
     price: 29,
     image: black,
     category: "tshirts",
-    sizes: ["S","M","L","XL"]
+    sizes: ["S", "M", "L", "XL"]
   }
 ];
 
