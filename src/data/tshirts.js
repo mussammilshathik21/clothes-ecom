@@ -1,13 +1,13 @@
-import blac from "../assets/t-shirt/Black.jpeg"
+import black from "../assets/t-shirt/Black.jpeg";
 
 const tshirts = [
   {
-  id:7,
-  name:"black t-Shirt",
-  price:29,
-  image:blac,
-  category:"tshirts",
-  sizes:["S","M","L","XL"]
+    id: 7,
+    name: "Black T-Shirt",
+    price: 29,
+    image: black,
+    category: "tshirts",
+    sizes: ["S","M","L","XL"]
   }
 ];
 
