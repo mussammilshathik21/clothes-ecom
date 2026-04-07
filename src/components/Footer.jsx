@@ -9,11 +9,11 @@ return(
 
 <div className="footer-container">
 
-<div className="about-description">
+<div className="footer-about">
 
 <h2>BrandName</h2>
 
-<p>Modern fashion for men</p><br />
+<p>Modern fashion for men.</p>
 
 <p>© 2026 Brand. All Rights Reserved.</p>
 
@@ -21,20 +21,19 @@ return(
 
 <div className="footer-contact">
 
-    <h3>Contact :</h3>
+<h3>Contact</h3>
 
 <p><FaPhone/> +91 98765 43210</p>
 
-<p><FaWhatsapp/> WhatsApp: +91 98765 43210</p>
+<p><FaWhatsapp/> +91 98765 43210</p>
 
-<p><FaEnvelope/> support@brand.com</p>
+<p><FaEnvelope/> mussammilshathik2@gmail.com</p>
 
-<p><FaInstagram/> @brandfashion</p>
-
-</div>
+<p><FaInstagram/> @mussammil_shathik</p>
 
 </div>
 
+</div>
 
 </footer>
 

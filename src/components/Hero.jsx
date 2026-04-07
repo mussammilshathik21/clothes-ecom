@@ -1,19 +1,46 @@
-import "./Hero.css"
-import heroImg from "../assets/Hero/Hero1.jpg"
+import { useEffect, useState } from "react";
+import API from "../api/api";
+import "./Hero.css";
 
 function Hero(){
-  return(
-    <div
-      className="hero"
-      style={{ backgroundImage: `url(${heroImg})` }}
-    >
-      <div className="hero-text">
-        <h1>Style That Defines You </h1>
-        <h3>Discover the latest men fashion</h3>
-        <button>Shop Now</button>
-      </div>
-    </div>
-  )
+
+const [banner,setBanner] = useState(null);
+
+useEffect(()=>{
+
+API.get("/banners/")
+.then(res=>{
+setBanner(res.data);
+})
+.catch(err=>{
+console.log(err);
+});
+
+},[]);
+
+if(!banner) return null;
+
+return(
+
+<div
+className="hero"
+style={{
+backgroundImage:`url(http://127.0.0.1:8000${banner.image})`
+}}
+>
+
+<div className="hero-text">
+
+<h1>{banner.title}</h1>
+
+<h3>{banner.subtitle}</h3>
+
+</div>
+
+</div>
+
+);
+
 }
 
-export default Hero
+export default Hero;

@@ -1,26 +1,42 @@
-import trending from "../data/trending";
+import { useEffect, useState } from "react";
+import API from "../api/api";
 import ProductCard from "./ProductCard";
-import "./trending.css";
 
-function Trending() {
+import "./Trending.css";
 
-  return (
+function Trending(){
 
-    <section className="trending">
+const [products,setProducts] = useState([]);
 
-      <h2>Trending Products</h2>
+useEffect(()=>{
 
-      <div className="products-grid">
+API.get("/products/trending/")
+.then(res=>{
+setProducts(res.data);
+})
+.catch(err=>{
+console.log(err);
+});
 
-        {trending.map((item) => (
-          <ProductCard key={item.id} product={item} />
-        ))}
+},[]);
 
-      </div>
+return(
 
-    </section>
+<section className="trending">
 
-  );
+<h2>Trending Products</h2>
+
+<div className="products-grid">
+
+{products.map(product=>(
+<ProductCard key={product.id} product={product}/>
+))}
+
+</div>
+
+</section>
+
+);
 
 }
 

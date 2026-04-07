@@ -6,13 +6,11 @@ function Categories() {
 const categories = [
 "shirts",
 "pants",
-"tshirts",
+"tshirt",
 "track",
 "shoes",
 "slippers",
 "watch",
-"accessories",
-"perfume",
 "chain",
 "ring"
 

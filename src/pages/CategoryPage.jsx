@@ -1,15 +1,7 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import shirts from "../data/shirts";
-import pants from "../data/pants";
-import tshirts from "../data/tshirts";
-import shoes from "../data/shoes";
-import watch from "../data/watch";
-import track from "../data/track";
-import slippers from "../data/slippers";
-import chain from "../data/chain";
-import ring from "../data/ring";
-
+import API from "../api/api";
 import ProductCard from "../components/ProductCard";
 
 import "./CategoryPage.css";
@@ -18,35 +10,53 @@ function CategoryPage() {
 
   const { categoryName } = useParams();
 
-  let products = [];
+  const [products, setProducts] = useState([]);
 
-  if (categoryName === "shirts") products = shirts;
-  if (categoryName === "pants") products = pants;
-  if (categoryName === "tshirts") products = tshirts;
-  if (categoryName === "shoes") products = shoes;
-  if (categoryName === "watch") products = watch;
-  if (categoryName === "track") products = track;
-  if (categoryName === "slippers") products =slippers;
-  if (categoryName === "chain") products = chain;
-  if (categoryName === "ring") products = ring
+  useEffect(() => {
+
+    const categoryMap = {
+      shirts: "shirt",
+      pants: "pant",
+      shoes: "shoe",
+      tshirts:"tshirt",
+      slippers:"slipper",
+      accessories: "accessory"
+    };
+
+    const apiCategory = categoryMap[categoryName] || categoryName;
+
+    API.get(`/products/?category=${apiCategory}`)
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }, [categoryName]);
 
   return (
-
     <div className="category-page">
 
-      <h2 className="category-title">{categoryName}</h2>
+      <h2 className="category-title">
+        {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+      </h2>
 
       <div className="products-grid">
 
-        {products.map((item) => (
-          <ProductCard key={item.id} product={item} />
-        ))}
+        {products.length === 0 ? (
+          <p>No products found</p>
+        ) : (
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        )}
 
       </div>
 
     </div>
-
   );
+
 }
 
 export default CategoryPage;

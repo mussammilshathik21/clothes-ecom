@@ -1,18 +1,16 @@
-.category-page{
-max-width:1200px;
-margin:auto;
-padding:40px 20px;
+.category-page {
+  padding: 40px 60px;
+  min-height: 70vh;
 }
 
-.category-title{
-font-size:28px;
-margin-bottom:30px;
-text-transform:capitalize;
+.category-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: 600;
 }
 
-.products-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-gap:30px;
-padding:40px 60px;
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
 }

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import API from "../api/api";
 
 export const CartContext = createContext();
 
@@ -6,39 +7,93 @@ export const CartProvider = ({ children }) => {
 
   const [cart, setCart] = useState([]);
 
-  // Add product
-  const addToCart = (product) => {
-    setCart([...cart, product]);
+  // Load cart items
+  const loadCart = async () => {
+
+    const token = localStorage.getItem("access");
+
+    if (!token) return;
+
+    try {
+
+      const res = await API.get("/cart/");
+
+      setCart(res.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+
   };
 
-  // Remove product
-  const removeFromCart = (index) => {
-    const newCart = cart.filter((_, i) => i !== index);
-    setCart(newCart);
+  useEffect(() => {
+    loadCart();
+  }, []);
+
+  // Add item to cart
+  const addToCart = async (productId, size = null) => {
+
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      alert("Please login first");
+      return;
+    }
+
+    console.log("Sending product_id:", productId);
+
+    try {
+
+      await API.post("/cart/add/", {
+        product_id: productId,
+        quantity: 1,
+        size: size
+      });
+
+      loadCart();
+
+    } catch (err) {
+
+      console.log(err.response?.data);
+
+    }
+
   };
 
-  // Increase quantity (add same product again)
-  const increaseQty = (product) => {
-    setCart([...cart, product]);
-  };
+  // Remove item
+  const removeFromCart = async (id) => {
 
-  // Decrease quantity
-  const decreaseQty = (index) => {
-    const newCart = cart.filter((_, i) => i !== index);
-    setCart(newCart);
+    try {
+
+      await API.delete(`/cart/remove/${id}/`);
+
+      loadCart();
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+
   };
 
   return (
+
     <CartContext.Provider
       value={{
         cart,
         addToCart,
         removeFromCart,
-        increaseQty,
-        decreaseQty
+        reloadCart: loadCart
       }}
     >
+
       {children}
+
     </CartContext.Provider>
+
   );
+
 };

@@ -1,61 +1,85 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../api/api";
+
 import "./Auth.css";
 
-function Login() {
+function Login(){
 
-  const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
+const [username,setUsername] = useState("");
+const [password,setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(email,password);
-    navigate("/profile");
-  };
+const handleSubmit = async(e)=>{
 
-  return (
+e.preventDefault();
 
-    <div className="auth-page">
+try{
 
-      <div className="auth-card">
+const res = await API.post("/login/",{
+username,
+password
+});
 
-        <h2>Login</h2>
+localStorage.setItem("access",res.data.access);
+localStorage.setItem("refresh",res.data.refresh);
 
-        <form onSubmit={handleSubmit}>
+alert("Login successful");
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-            required
-          />
+// reload so interceptor uses token
+window.location.href="/";
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
-            required
-          />
+}catch(err){
 
-          <button type="submit">Login</button>
+console.log(err.response?.data);
+alert("Invalid username or password");
 
-        </form>
+}
 
-        <p>
-          No account? <Link to="/signup">Signup</Link>
-        </p>
+};
 
-      </div>
+return(
 
-    </div>
+<div className="auth-page">
 
-  );
+<div className="auth-card">
+
+<h2>Login</h2>
+
+<form onSubmit={handleSubmit}>
+
+<input
+type="text"
+placeholder="Username"
+value={username}
+onChange={(e)=>setUsername(e.target.value)}
+required
+/>
+
+<input
+type="password"
+placeholder="Password"
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+required
+/>
+
+<button type="submit">
+Login
+</button>
+
+</form>
+
+<p>
+No account? <Link to="/signup">Signup</Link>
+</p>
+
+</div>
+
+</div>
+
+);
 
 }
 

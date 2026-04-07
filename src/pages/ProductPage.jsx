@@ -1,73 +1,126 @@
-import { useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 
-import products from "../data/products";
+import API from "../api/api";
 import { CartContext } from "../context/CartContext";
 
 import "./ProductPage.css";
 
-function ProductPage(){
+function ProductPage() {
 
-const { id } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-const product = products.find((item)=> item.id === Number(id));
+  const { addToCart } = useContext(CartContext);
 
-const { addToCart } = useContext(CartContext);
+  const [product, setProduct] = useState(null);
+  const [size, setSize] = useState("");
 
-const [size,setSize] = useState("");
+  useEffect(() => {
 
-if(!product) return <h2>Product not found</h2>;
+    const fetchProduct = async () => {
 
-return(
+      try {
 
-<div className="product-page">
+        const res = await API.get(`/products/${id}/`);
 
-<div className="product-page-image">
-<img src={product.image} alt={product.name}/>
-</div>
+        setProduct(res.data);
 
-<div className="product-details">
+      } catch (err) {
 
-<h2>{product.name}</h2>
+        console.log(err);
 
-<p className="price">${product.price}</p>
+      }
 
-{/* show sizes only if available */}
+    };
 
-{product.sizes && (
+    fetchProduct();
 
-<>
-<h4>Select Size</h4>
+  }, [id]);
 
-<div className="sizes">
+  const handleAddToCart = async () => {
 
-{product.sizes.map((s)=>(
-<button
-key={s}
-className={size===s ? "size active":"size"}
-onClick={()=>setSize(s)}
->
-{s}
-</button>
-))}
+    if (!product) return;
 
-</div>
-</>
+    const token = localStorage.getItem("access");
 
-)}
+    if (!token) {
+      alert("Please login first");
+      navigate("/login");
+      return;
+    }
 
-<button
-className="add-cart"
-onClick={()=>addToCart(product)}
->
-Add To Cart
-</button>
+    if (product.sizes && product.sizes.length > 0 && !size) {
+      alert("Please select size");
+      return;
+    }
 
-</div>
+    await addToCart(product.id, size);
 
-</div>
+    alert("Added to cart");
 
-)
+  };
+
+  if (!product) {
+    return <h2 style={{ padding: "40px" }}>Loading...</h2>;
+  }
+
+  return (
+
+    <div className="product-page">
+
+      <div className="product-page-image">
+
+        <img
+          src={`http://127.0.0.1:8000${product.image}`}
+          alt={product.name}
+        />
+
+      </div>
+
+      <div className="product-details">
+
+        <h2>{product.name}</h2>
+
+        <p className="price">${product.price}</p>
+
+        {product.sizes && product.sizes.length > 0 && (
+
+          <>
+            <h4>Select Size</h4>
+
+            <div className="sizes">
+
+              {product.sizes.map((s) => (
+
+                <button
+                  key={s}
+                  className={size === s ? "size active" : "size"}
+                  onClick={() => setSize(s)}
+                >
+                  {s}
+                </button>
+
+              ))}
+
+            </div>
+
+          </>
+
+        )}
+
+        <button
+          className="add-cart"
+          onClick={handleAddToCart}
+        >
+          Add To Cart
+        </button>
+
+      </div>
+
+    </div>
+
+  );
 
 }
 

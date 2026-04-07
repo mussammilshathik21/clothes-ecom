@@ -1,42 +1,37 @@
-import { useContext } from "react";
-import { FavoriteContext } from "../context/FavoriteContext";
-import "./Favorite.css";
+import { useEffect, useState } from "react";
+import API from "../api/api";
+import ProductCard from "../components/ProductCard";
 
 function FavoritePage(){
 
-const { favorites, removeFavorite } = useContext(FavoriteContext);
+const [favorites,setFavorites] = useState([]);
+
+useEffect(()=>{
+
+API.get("/products/favorites/")
+.then(res=>{
+setFavorites(res.data);
+})
+
+},[]);
 
 return(
 
-<div className="favorite-page">
+<div>
 
-<h2 className="favorite-title">Favorite Products</h2>
+<h2>My Wishlist</h2>
 
-<div className="favorite-grid">
+<div className="products-grid">
 
-{favorites.map((item)=>(
-
-<div key={item.id} className="favorite-card">
-
-<img src={item.image} alt={item.name}/>
-
-<h3>{item.name}</h3>
-
-<p>${item.price}</p>
-
-<button onClick={()=>removeFavorite(item.id)}>
-Remove
-</button>
-
-</div>
-
+{favorites.map(item=>(
+<ProductCard key={item.id} product={item.product}/>
 ))}
 
 </div>
 
 </div>
 
-)
+);
 
 }
 

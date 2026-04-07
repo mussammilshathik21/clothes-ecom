@@ -1,56 +1,90 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { useContext, useState } from "react";
 
 import { CartContext } from "../context/CartContext";
-import { FavoriteContext } from "../context/FavoriteContext";
+import API from "../api/api";
 
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
 
-const { addToCart } = useContext(CartContext);
-const { addFavorite } = useContext(FavoriteContext);
+  const { addToCart } = useContext(CartContext);
 
-return (
+  const [liked, setLiked] = useState(false);
 
-<div className="product-card">
 
-<div className="product-card-image">
+  // =====================
+  // TOGGLE FAVORITE
+  // =====================
+  const toggleFavorite = async () => {
 
-<Link to={`/product/${product.id}`}>
-<img src={product.image} alt={product.name}/>
-</Link>
+    try {
 
-<button
-className="favorite-btn"
-onClick={()=>addFavorite(product)}
->
-<FaHeart/>
-</button>
+      const res = await API.post("/products/favorites/toggle/", {
+        product_id: product.id
+      });
 
-</div>
+      if (res.data.status === "added") {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
 
-<div className="product-info">
+    } catch (err) {
 
-<h3>{product.name}</h3>
+      alert("Please login first");
 
-<p className="price">${product.price}</p>
+    }
 
-<button
-className="cart-btn"
-onClick={()=>addToCart(product)}
->
+  };
 
-<FaShoppingCart/> Add to Cart
 
-</button>
+  return (
 
-</div>
+    <div className="product-card">
 
-</div>
+      {/* HEART BUTTON */}
+      <button
+        className={`heart-btn ${liked ? "active" : ""}`}
+        onClick={toggleFavorite}
+      >
+        <FaHeart />
+      </button>
 
-)
+
+      {/* PRODUCT IMAGE */}
+      <Link to={`/product/${product.id}`}>
+
+        <img
+          src={`http://127.0.0.1:8000${product.image}`}
+          alt={product.name}
+        />
+
+      </Link>
+
+
+      {/* PRODUCT INFO */}
+      <div className="product-info">
+
+        <h3>{product.name}</h3>
+
+        <p className="price">${product.price}</p>
+
+      </div>
+
+
+      {/* ADD TO CART */}
+      <button
+        className="cart-btn"
+        onClick={() => addToCart(product)}
+      >
+        <FaShoppingCart /> Add To Cart
+      </button>
+
+    </div>
+
+  );
 
 }
 

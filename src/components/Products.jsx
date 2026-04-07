@@ -1,20 +1,37 @@
-import products from "../data/products";
+import { useEffect, useState } from "react";
+import API from "../api/api";
+
 import ProductCard from "./ProductCard";
+
 import "./Products.css";
 
-function Products() {
+function Products(){
 
-  return (
+const [products,setProducts] = useState([]);
 
-    <div className="products-grid">
+useEffect(()=>{
 
-      {products.map((item) => (
-        <ProductCard key={item.id} product={item} />
-      ))}
+API.get("/products/")
+.then(res=>{
+setProducts(res.data.products);
+})
+.catch(err=>{
+console.log(err);
+});
 
-    </div>
+},[]);
 
-  );
+return(
+
+<div className="products-grid">
+
+{products.map(product=>(
+<ProductCard key={product.id} product={product}/>
+))}
+
+</div>
+
+);
 
 }
 

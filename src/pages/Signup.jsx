@@ -1,21 +1,40 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../api/api";
+
 import "./Auth.css";
 
 function Signup() {
 
-  const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    signup(name,email,password);
-    navigate("/profile");
+
+    try{
+
+      await API.post("/register/",{
+        username: name,
+        email: email,
+        password: password
+      });
+
+      alert("Account created successfully");
+
+      navigate("/login");
+
+    }catch(err){
+
+      console.log(err);
+      alert("Signup failed");
+
+    }
+
   };
 
   return (
@@ -30,7 +49,7 @@ function Signup() {
 
           <input
             type="text"
-            placeholder="Full Name"
+            placeholder="Username"
             value={name}
             onChange={(e)=>setName(e.target.value)}
             required
@@ -67,6 +86,7 @@ function Signup() {
     </div>
 
   );
+
 }
 
 export default Signup;

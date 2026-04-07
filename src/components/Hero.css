@@ -1,40 +1,59 @@
 .hero{
-height:450px;
-background-image:url("../assets/Hero/Hero1.jpg");
-background-size:cover;
-background-position:center 30%;
-background-repeat:no-repeat;
+  height:65vh;
+  background-size:cover;
+  background-position:center;
 
-display:flex;
-align-items:flex-start;
-padding-left:80px;
-padding-top:80px;
-color:black;
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+
+  padding-top:70px;   /* space under navbar */
+  padding-left:20px;  /* align with BrandName */
+  color:white;
 }
 
+/* HERO TEXT */
+
 .hero-text{
-display:flex;
-flex-direction:column;
-gap:10px;
+  max-width:420px;
+  color: black;
 }
 
 .hero-text h1{
-font-size:50px;
-margin-left: 15px;
-margin-top: 20px;
+  font-size:38px;
+  margin-bottom:5px;
+  margin-left: 50px;
+  
 }
 
 .hero-text h3{
-font-size:25px;
-font-weight: 700;
-margin-left: 15px;
-margin-bottom: 5px;
+  font-size:20px;
+  font-weight:1200;
+  margin-left: 50px;
 }
 
-.hero-text button{
-height: 30px;
-width: 100px;
-background-color: black;
-color: white;
-margin-left: 20px;
+/* MOBILE */
+
+@media (max-width:600px){
+
+.hero{
+  height:40vh;
+  padding:40px 20px;
+}
+
+.hero-text h1{
+  font-size:26px;
+  color: white;
+  margin-left: 1px;
+  
+}
+
+.hero-text h3{
+  font-size:14px;
+  font-weight: 800;
+  color: white;
+  margin-left: 1px;
+}
+
 }
