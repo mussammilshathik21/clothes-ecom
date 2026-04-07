@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/api";
 import ProductCard from "./ProductCard";
 
-import "./trending.css";
+import "./Trending.css";
 
 function Trending(){
 
