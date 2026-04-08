@@ -66,9 +66,9 @@ return(
 <div className="cart-item" key={item.id}>
 
 <img
-src={`http://127.0.0.1:8000${item.product.image}`}
+src={`https://django-ecommerce-backend-rbsw.onrender.com${item.product.image}`}
 alt={item.product.name}
-/>
+
 
 <div className="cart-info">
 

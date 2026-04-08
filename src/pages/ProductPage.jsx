@@ -72,7 +72,7 @@ function ProductPage() {
       <div className="product-page-image">
 
         <img
-          src={`http://127.0.0.1:8000${product.image}`}
+          src={`https://django-ecommerce-backend-rbsw.onrender.com${product.image}`}
           alt={product.name}
         />
 
