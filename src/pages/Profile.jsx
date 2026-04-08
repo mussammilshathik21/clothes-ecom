@@ -129,7 +129,7 @@ function Profile() {
             {/* PROFILE IMAGE */}
             {user.profile_pic && (
               <img
-                src={`http://127.0.0.1:8000${user.profile_pic}`}
+                src={`https://django-ecommerce-backend-rbsw.onrender.com${user.profile_pic}`}
                 alt="Profile"
                 className="profile-image"
               />
