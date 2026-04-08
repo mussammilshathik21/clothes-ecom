@@ -25,7 +25,7 @@ return(
 <div
 className="hero"
 style={{
-backgroundImage:`url(http://127.0.0.1:8000${banner.image})`
+backgroundImage:`url(https://django-ecommerce-backend-rbsw.onrender.com${banner.image})`
 }}
 >
 
